@@ -1,0 +1,13 @@
+__pycache__/*
+backup/*
+bin/*
+include/*
+lib/*
+lib64/**
+lib64
+.env
+data*/*
+pip-selfcheck.json
+pyvenv.cfg
+dist/*
+build/*
