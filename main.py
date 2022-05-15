@@ -23,25 +23,27 @@ def error_handling(err):
 
     return True
 
-## account.search
+def sendRequest(url, method, headers, data, filename):
+    try:
+        response = requests.post(url + '/' + method, headers=headers, data=data)
+
+        if response.status_code == 200:
+            if error_handling(response.json()):
+                with open(f"data/{filename}", "w") as f:
+                    json.dump(response.json(), f)
+
+    except requests.exceptions.RequestException as e: 
+        print('Got error: ' + e)
+        raise SystemExit(e)
+
+## Accounts
 def account():
     number = os.getenv('ACCOUNT_NUMBER')
     method = 'accounts.search'
     query = f'SELECT * FROM accounts LIMIT {number}'
 
     data = f'apiKey={apiKey}&secret={secretKey}&userKey={userKey}&query={query}'
-
-    try:
-        response = requests.post(url + '/' + method, headers=headers, data=data)
-
-        if response.status_code == 200:
-            if error_handling(response.json()):
-                with open("data/accounts.json", "w") as f:
-                    json.dump(response.json(), f)
-
-    except requests.exceptions.RequestException as e: 
-        print('Got error: ' + e)
-        raise SystemExit(e)
+    sendRequest(url, method, headers, data, 'accounts.json')
 
 if __name__ == "__main__":
     account()
