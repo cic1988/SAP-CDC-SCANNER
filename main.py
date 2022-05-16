@@ -38,6 +38,8 @@ def sendRequest(url, method, headers, data, filename):
 
 ## Accounts
 def account():
+    # TODO: pagination not implemented, limit to max. 5000, see:
+    # https://help.sap.com/docs/SAP_CUSTOMER_DATA_CLOUD/8b8d6fffe113457094a17701f63e3d6a/b32ce0918af44c3ebd7e96650fa6cc1d.html?locale=en-US
     number = os.getenv('ACCOUNT_NUMBER')
     method = 'accounts.search'
     query = f'SELECT * FROM accounts LIMIT {number}'
